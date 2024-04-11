@@ -3,13 +3,24 @@
    [re-frame.core :as re-frame]
    [tz-converter.styles :as styles]
    [tz-converter.subs :as subs]
-   [tz-converter.util :as util]
+   [tz-converter.util :as util :refer [<sub >evt]]
    [clojure.string :as str]
    [cljs-bean.core :refer [bean]]
-   ["antd" :refer [Select TimePicker ConfigProvider Divider theme]]))
+   [tick.core :as t]
+   ["antd" :refer [Select
+                   TimePicker
+                   Typography
+                   ConfigProvider
+                   Divider
+                   theme]]))
 
 (def timezones
   (util/generate-zone-ids))
+
+(def default-timezone
+  (let [current-timezone (util/get-current-timezone)]
+    (when (contains? timezones current-timezone)
+      current-timezone)))
 
 (def time-zone-grouped-options
   (->> timezones
@@ -41,37 +52,32 @@
 (def timepicker-format
   "HH:mm")
 
+
+(prn (<sub [::subs/default-time]))
+
 (defn main-panel []
   (let [name (re-frame/subscribe [::subs/name])]
     [:div {:style {:backdrop-filter "blur(30px)"
                    :height "100%"}}
-     [:> ConfigProvider {:theme {:algorithm (.-darkAlgorithm theme)}}]
-     [:div {:class (styles/heading)}
-      "Hello from " @name]
-     [:div
-      {:style {:display :flex
-               :height "100%"
-               :align-items :center
-               :justify-content :center
-               :gap "8px"}}
-      [:div {:style {:width "200px"
-                     :gap "16px"
-                     :display :flex
-                     :flex-direction :column}}
-       [:> TimePicker {:format timepicker-format}]
-       [:> Select {:style "200px"
-                   :filter-option filter-time-zone
+     [:div (styles/title-container)
+      [:> Typography.Title {:level 3}
+       "Timezone converter"]]
+     [:div (styles/input-row)
+      [:div (styles/input-column)
+       [:> TimePicker {:format timepicker-format
+                       :default-value (<sub [::subs/default-time])
+                       :on-change (fn [x]
+                                    (js/console.log x)) }]
+       [:> Select {:filter-option filter-time-zone
+                   :default-value (<sub [::subs/default-timezone])
+                   ;; :on-change
                    :show-search true
                    :placeholder "Select Timezone"
                    :options time-zone-grouped-options}]]
       [:> Divider {:type "vertical"} ]
-      [:div {:style {:width "200px"
-                     :gap "16px"
-                     :display :flex
-                     :flex-direction :column}}
+      [:div (styles/input-column)
        [:> TimePicker {:format timepicker-format}]
-       [:> Select {:style "200px"
-                   :show-search true
+       [:> Select {:show-search true
                    :filter-option filter-time-zone
                    :placeholder "Select Timezone"
                    :options time-zone-grouped-options}]]]]))
