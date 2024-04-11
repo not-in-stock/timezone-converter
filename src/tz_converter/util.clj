@@ -2,5 +2,5 @@
   (:import (java.time ZoneId)))
 
 (defmacro generate-zone-ids []
-  (let [zone-ids# (vec (ZoneId/getAvailableZoneIds))]
+  (let [zone-ids# (set (ZoneId/getAvailableZoneIds))]
     zone-ids#))
