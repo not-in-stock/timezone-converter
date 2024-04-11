@@ -13,9 +13,16 @@
      :font-style :normal
      :margin "0"
      :height "100%"}
+    [:div#app
+     {:height "100%"}]
     [:div.ant-select
-     {:width "100%"}]]])
+     {:width "100%"}]
+    [:div.ant-picker
+     {:width "100%"}]
+    [:div.ant-divider
+     {:height "100%"
+      :border-inline-start "1px solid rgba(250, 250, 250, 0.09)"}]]])
 
-(defclass level1
+(defclass heading
   []
   {:color :white})
