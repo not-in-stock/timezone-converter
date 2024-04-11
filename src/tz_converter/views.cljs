@@ -1,13 +1,11 @@
 (ns tz-converter.views
   (:require
-   [re-frame.core :as re-frame]
    [tz-converter.styles :as styles]
    [tz-converter.subs :as subs]
    [tz-converter.events :as events]
    [tz-converter.util :as util :refer [<sub >evt]]
    [clojure.string :as str]
    [cljs-bean.core :refer [bean]]
-   [tick.core :as t]
    ["antd" :refer [Select
                    TimePicker
                    Typography
@@ -16,7 +14,7 @@
                    theme]]))
 
 (def timezones
-  (util/generate-zone-ids))
+  (util/get-available-timezones))
 
 (defn- zone-id->label [timezone]
   (str/replace timezone #"_" " "))
@@ -57,13 +55,6 @@
 
 (defn left-panel-pickers []
   [:div#left-panel (styles/input-column)
-   [:> TimePicker
-    {:format timepicker-format
-     :default-value (<sub [::subs/default-time])
-     :on-change (fn [_ time]
-                  (>evt [::events/set-time :left-panel
-                         (when-not (str/blank? time)
-                           time)]))}]
    [:> Select {:show-search true
                :filter-option filter-time-zone
                :allow-clear true
@@ -71,23 +62,30 @@
                :on-change #(>evt [::events/set-timezone :left-panel %])
                :on-clear #(>evt [::events/set-timezone :left-panel nil])
                :placeholder "Select Timezone"
-               :options time-zone-grouped-options}]])
+               :options time-zone-grouped-options}]
+   [:> TimePicker
+    {:format timepicker-format
+     :default-value (<sub [::subs/default-time])
+     :on-change (fn [_ time]
+                  (>evt [::events/set-time :left-panel
+                         (when-not (str/blank? time)
+                           time)]))}]])
 
 (defn right-panle-pickers []
   [:div#right-panle (styles/input-column)
-   [:> TimePicker
-    {:format timepicker-format
-     :on-change (fn [_ time]
-                  (>evt [::events/set-time :right-panel
-                         (when-not (str/blank? time)
-                           time)]))}]
    [:> Select {:show-search true
                :allow-clear true
                :filter-option filter-time-zone
                :placeholder "Select Timezone"
                :on-change #(>evt [::events/set-timezone :right-panel %])
                :on-clear #(>evt [::events/set-timezone :right-panel nil])
-               :options time-zone-grouped-options}]])
+               :options time-zone-grouped-options}]
+   [:> TimePicker
+    {:format timepicker-format
+     :on-change (fn [_ time]
+                  (>evt [::events/set-time :right-panel
+                         (when-not (str/blank? time)
+                           time)]))}]])
 
 (defn direction-marker []
   [:div (styles/title-container)
