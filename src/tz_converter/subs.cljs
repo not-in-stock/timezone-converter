@@ -27,3 +27,8 @@
  ::default-time
  (fn [_ _]
    (now)))
+
+(re-frame/reg-sub
+ ::primary-panel
+ (fn [{:keys [primary-panel]}]
+   primary-panel))
