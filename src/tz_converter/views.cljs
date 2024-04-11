@@ -18,6 +18,16 @@
 (def timezones
   (util/generate-zone-ids))
 
+(defn- zone-id->label [timezone]
+  (str/replace timezone #"_" " "))
+
+(defn- create-group-options [zones]
+  (->> zones
+       (sort-by :timezone)
+       (map (fn [{:keys [timezone raw-timezone]}]
+              {:label (zone-id->label timezone)
+               :value raw-timezone}))))
+
 (def time-zone-grouped-options
   (->> timezones
        (map (fn [tz]
@@ -34,44 +44,49 @@
                  (conj option-groups
                        {:title group
                         :label group
-                        :options (map (fn [{:keys [timezone raw-timezone]}]
-                                        {:label (str/replace timezone #"_" " ")
-                                         :value raw-timezone})
-                                      zones)})) [])))
+                        :options (create-group-options zones)})) [])))
 
 (defn filter-time-zone [term option]
   (let [{:keys [value]} (bean option)]
     (some-> value
-            (str/replace #"_" " ")
+            zone-id->label
             (str/includes? term))))
 
 (def timepicker-format
   "HH:mm")
 
 (defn left-panel-pickers []
-  [:div#left (styles/input-column)
+  [:div#left-panel (styles/input-column)
    [:> TimePicker
     {:format timepicker-format
      :default-value (<sub [::subs/default-time])
      :on-change (fn [_ time]
-                  (>evt [::events/set-time :left-panel time]))}]
-   [:> Select {:filter-option filter-time-zone
+                  (>evt [::events/set-time :left-panel
+                         (when-not (str/blank? time)
+                           time)]))}]
+   [:> Select {:show-search true
+               :filter-option filter-time-zone
+               :allow-clear true
                :default-value (<sub [::subs/default-timezone])
                :on-change #(>evt [::events/set-timezone :left-panel %])
-               :show-search true
+               :on-clear #(>evt [::events/set-timezone :left-panel nil])
                :placeholder "Select Timezone"
                :options time-zone-grouped-options}]])
 
 (defn right-panle-pickers []
-  [:div#right (styles/input-column)
+  [:div#right-panle (styles/input-column)
    [:> TimePicker
     {:format timepicker-format
      :on-change (fn [_ time]
-                  (>evt [::events/set-time :right-panel time]))}]
+                  (>evt [::events/set-time :right-panel
+                         (when-not (str/blank? time)
+                           time)]))}]
    [:> Select {:show-search true
+               :allow-clear true
                :filter-option filter-time-zone
                :placeholder "Select Timezone"
                :on-change #(>evt [::events/set-timezone :right-panel %])
+               :on-clear #(>evt [::events/set-timezone :right-panel nil])
                :options time-zone-grouped-options}]])
 
 (defn direction-marker []
