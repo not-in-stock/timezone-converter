@@ -5,14 +5,12 @@
    [dayjs]))
 
 (def timezones
-  (util/generate-zone-ids))
+  (util/get-available-timezones))
 
 (re-frame/reg-sub
  ::default-timezone
  (fn [_ _]
-   (let [current-timezone (util/get-current-timezone)]
-     (when (contains? timezones current-timezone)
-       current-timezone))))
+   (util/get-current-timezone)))
 
 (def now
   dayjs)
