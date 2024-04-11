@@ -30,6 +30,7 @@
    :height "100%"
    :align-items :center
    :justify-content :center
+   :padding "16px"
    :gap "8px"})
 
 (defattrs input-column []
