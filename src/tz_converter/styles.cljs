@@ -1,6 +1,6 @@
 (ns tz-converter.styles
   (:require
-   [spade.core   :refer [defglobal defclass]]))
+   [spade.core :refer [defglobal defclass defattrs]]))
 
 (defglobal defaults
   [:html {:height "100%"}
@@ -21,6 +21,19 @@
     [:div.ant-divider
      {:height "100%"}]]])
 
-(defclass heading
-  []
-  {:color :white})
+(defattrs title-container []
+  {:display :flex
+   :justify-content :center})
+
+(defattrs input-row []
+  {:display :flex
+   :height "100%"
+   :align-items :center
+   :justify-content :center
+   :gap "8px"})
+
+(defattrs input-column []
+  {:width "200px"
+   :gap "16px"
+   :display :flex
+   :flex-direction :column})
