@@ -1,6 +1,5 @@
 (ns tz-converter.util
-  (:require [re-frame.core :as re-frame])
-  (:require-macros [tz-converter.util]))
+  (:require [re-frame.core :as re-frame]))
 
 (defn get-current-timezone []
   (-> js/Intl
