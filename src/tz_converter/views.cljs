@@ -53,28 +53,27 @@
   "HH:mm")
 
 (defn main-panel []
-  (let [name (re-frame/subscribe [::subs/name])]
-    [:div {:style {:backdrop-filter "blur(30px)"
-                   :height "100%"}}
-     [:div (styles/title-container)
-      [:> Typography.Title {:level 3}
-       "Timezone converter"]]
-     [:div (styles/input-row)
-      [:div (styles/input-column)
-       [:> TimePicker {:format timepicker-format
-                       :default-value (<sub [::subs/default-time])
-                       :on-change (fn [x]
-                                    (js/console.log x)) }]
-       [:> Select {:filter-option filter-time-zone
-                   :default-value (<sub [::subs/default-timezone])
-                   ;; :on-change
-                   :show-search true
-                   :placeholder "Select Timezone"
-                   :options time-zone-grouped-options}]]
-      [:> Divider {:type "vertical"} ]
-      [:div (styles/input-column)
-       [:> TimePicker {:format timepicker-format}]
-       [:> Select {:show-search true
-                   :filter-option filter-time-zone
-                   :placeholder "Select Timezone"
-                   :options time-zone-grouped-options}]]]]))
+  [:div {:style {:backdrop-filter "blur(30px)"
+                 :height "100%"}}
+   [:div (styles/title-container)
+    [:> Typography.Title {:level 3}
+     "Timezone converter"]]
+   [:div (styles/input-row)
+    [:div (styles/input-column)
+     [:> TimePicker {:format timepicker-format
+                     :default-value (<sub [::subs/default-time])
+                     :on-change (fn [x]
+                                  (js/console.log x)) }]
+     [:> Select {:filter-option filter-time-zone
+                 :default-value (<sub [::subs/default-timezone])
+                 ;; :on-change
+                 :show-search true
+                 :placeholder "Select Timezone"
+                 :options time-zone-grouped-options}]]
+    [:> Divider {:type "vertical"} ]
+    [:div (styles/input-column)
+     [:> TimePicker {:format timepicker-format}]
+     [:> Select {:show-search true
+                 :filter-option filter-time-zone
+                 :placeholder "Select Timezone"
+                 :options time-zone-grouped-options}]]]])
