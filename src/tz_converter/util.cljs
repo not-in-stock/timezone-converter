@@ -8,5 +8,9 @@
       .resolvedOptions
       .-timeZone))
 
+(defn get-available-timezones []
+  (set (js/Intl.supportedValuesOf "timeZone")))
+
 (def <sub (comp deref re-frame/subscribe))
+
 (def >evt re-frame/dispatch)
