@@ -50,9 +50,11 @@
 
 (defn left-panel-pickers []
   [:div#left (styles/input-column)
-   [:> TimePicker {:format timepicker-format
-                   :default-value (<sub [::subs/default-time])
-                   :on-change #(>evt [::events/set-time :left-panel %])}]
+   [:> TimePicker
+    {:format timepicker-format
+     :default-value (<sub [::subs/default-time])
+     :on-change (fn [_ time]
+                  (>evt [::events/set-time :left-panel time]))}]
    [:> Select {:filter-option filter-time-zone
                :default-value (<sub [::subs/default-timezone])
                :on-change #(>evt [::events/set-timezone :left-panel %])
@@ -62,8 +64,10 @@
 
 (defn right-panle-pickers []
   [:div#right (styles/input-column)
-   [:> TimePicker {:format timepicker-format
-                   :on-change #(>evt [::events/set-time :right-panel %])}]
+   [:> TimePicker
+    {:format timepicker-format
+     :on-change (fn [_ time]
+                  (>evt [::events/set-time :right-panel time]))}]
    [:> Select {:show-search true
                :filter-option filter-time-zone
                :placeholder "Select Timezone"

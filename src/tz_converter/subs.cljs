@@ -15,7 +15,6 @@
        current-timezone))))
 
 (def now
-  "API reference https://day.js.org/docs/en/parse/now"
   dayjs)
 
 (re-frame/reg-sub
