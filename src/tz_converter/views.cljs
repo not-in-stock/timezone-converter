@@ -52,9 +52,6 @@
 (def timepicker-format
   "HH:mm")
 
-
-(prn (<sub [::subs/default-time]))
-
 (defn main-panel []
   (let [name (re-frame/subscribe [::subs/name])]
     [:div {:style {:backdrop-filter "blur(30px)"
