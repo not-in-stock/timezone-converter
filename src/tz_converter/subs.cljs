@@ -4,11 +4,6 @@
    [re-frame.core :as re-frame]
    [dayjs]))
 
-(re-frame/reg-sub
- ::name
- (fn [db]
-   (:name db)))
-
 (def timezones
   (util/generate-zone-ids))
 
