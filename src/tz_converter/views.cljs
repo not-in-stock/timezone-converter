@@ -3,6 +3,7 @@
    [re-frame.core :as re-frame]
    [tz-converter.styles :as styles]
    [tz-converter.subs :as subs]
+   [tz-converter.events :as events]
    [tz-converter.util :as util :refer [<sub >evt]]
    [clojure.string :as str]
    [cljs-bean.core :refer [bean]]
@@ -16,11 +17,6 @@
 
 (def timezones
   (util/generate-zone-ids))
-
-(def default-timezone
-  (let [current-timezone (util/get-current-timezone)]
-    (when (contains? timezones current-timezone)
-      current-timezone)))
 
 (def time-zone-grouped-options
   (->> timezones
@@ -52,28 +48,46 @@
 (def timepicker-format
   "HH:mm")
 
+(defn left-panel-pickers []
+  [:div#left (styles/input-column)
+   [:> TimePicker {:format timepicker-format
+                   :default-value (<sub [::subs/default-time])
+                   :on-change #(>evt [::events/set-time :left-panel %])}]
+   [:> Select {:filter-option filter-time-zone
+               :default-value (<sub [::subs/default-timezone])
+               :on-change #(>evt [::events/set-timezone :left-panel %])
+               :show-search true
+               :placeholder "Select Timezone"
+               :options time-zone-grouped-options}]])
+
+(defn right-panle-pickers []
+  [:div#right (styles/input-column)
+   [:> TimePicker {:format timepicker-format
+                   :on-change #(>evt [::events/set-time :right-panel %])}]
+   [:> Select {:show-search true
+               :filter-option filter-time-zone
+               :placeholder "Select Timezone"
+               :on-change #(>evt [::events/set-timezone :right-panel %])
+               :options time-zone-grouped-options}]])
+
+(defn direction-marker []
+  [:div (styles/title-container)
+   [:> Typography.Title {:level 5}
+    (if (= :left-panel (<sub [::subs/primary-panel]))
+      "->"
+      "<-")]])
+
 (defn main-panel []
   [:div {:style {:backdrop-filter "blur(30px)"
                  :height "100%"}}
    [:div (styles/title-container)
     [:> Typography.Title {:level 3}
      "Timezone converter"]]
+
    [:div (styles/input-row)
-    [:div (styles/input-column)
-     [:> TimePicker {:format timepicker-format
-                     :default-value (<sub [::subs/default-time])
-                     :on-change (fn [x]
-                                  (js/console.log x)) }]
-     [:> Select {:filter-option filter-time-zone
-                 :default-value (<sub [::subs/default-timezone])
-                 ;; :on-change
-                 :show-search true
-                 :placeholder "Select Timezone"
-                 :options time-zone-grouped-options}]]
-    [:> Divider {:type "vertical"} ]
-    [:div (styles/input-column)
-     [:> TimePicker {:format timepicker-format}]
-     [:> Select {:show-search true
-                 :filter-option filter-time-zone
-                 :placeholder "Select Timezone"
-                 :options time-zone-grouped-options}]]]])
+    [left-panel-pickers]
+    [:div (styles/divider-column)
+     [:> Divider {:type "vertical"}]
+     [direction-marker]
+     [:> Divider {:type "vertical"}]]
+    [right-panle-pickers]]])

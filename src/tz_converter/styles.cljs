@@ -38,3 +38,8 @@
    :gap "16px"
    :display :flex
    :flex-direction :column})
+
+(defattrs divider-column []
+  {:display :flex
+   :flex-direction :column
+   :height "100%"})
