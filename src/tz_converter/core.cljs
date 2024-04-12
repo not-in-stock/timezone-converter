@@ -4,9 +4,7 @@
    [re-frame.core :as re-frame]
    [tz-converter.events :as events]
    [tz-converter.views :as views]
-   [tz-converter.config :as config]
-   ))
-
+   [tz-converter.config :as config]))
 
 (defn dev-setup []
   (when config/debug?
