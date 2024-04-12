@@ -42,4 +42,5 @@
 (defattrs divider-column []
   {:display :flex
    :flex-direction :column
-   :height "100%"})
+   :height "100%"
+   :align-items :center})

@@ -5,13 +5,17 @@
    [tz-converter.events :as events]
    [tz-converter.util :as util :refer [<sub >evt]]
    [medley.core :as medley]
+   ["@ant-design/icons" :refer [ArrowRightOutlined
+                                ArrowLeftOutlined]]
    [tick.core :as t]
    [clojure.string :as str]
+   [reagent.core :as r]
    [cljs-bean.core :refer [bean]]
    ["antd" :refer [Select
                    TimePicker
                    Typography
                    ConfigProvider
+                   Button
                    Divider
                    theme]]))
 
@@ -72,7 +76,6 @@
    [:> Select {:show-search true
                :filter-option filter-time-zone
                :allow-clear true
-               :default-value (<sub [::subs/default-timezone])
                :value (<sub [::subs/left-timezone])
                :on-change #(>evt [::events/set-timezone :left-panel %])
                :on-clear #(>evt [::events/set-timezone :left-panel nil])
@@ -99,12 +102,16 @@
      :on-change (fn [date-time _time]
                   (>evt [::events/set-time :right-panel date-time]))}]])
 
-(defn direction-marker []
-  [:div (styles/title-container)
-   [:> Typography.Title {:level 5}
-    (if (= :left-panel (<sub [::subs/primary-panel]))
-      "->"
-      "<-")]])
+(defn direction-button []
+  (let [source-panel (<sub [::subs/source-panel])]
+    [:div (styles/title-container)
+    [:> Button {:type "primary"
+                :shape "circle"
+                :on-click #(>evt [::events/flip-source-panel])
+                :icon (r/as-element
+                       (case source-panel
+                         :left-panel [:> ArrowRightOutlined]
+                         :right-panel [:> ArrowLeftOutlined]))}]]))
 
 (defn main-panel []
   [:div {:style {:backdrop-filter "blur(30px)"
@@ -117,6 +124,6 @@
     [left-panel-pickers]
     [:div (styles/divider-column)
      [:> Divider {:type "vertical"}]
-     [direction-marker]
+     [direction-button]
      [:> Divider {:type "vertical"}]]
     [right-panle-pickers]]])
