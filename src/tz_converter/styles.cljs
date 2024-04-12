@@ -3,6 +3,8 @@
    [garden.stylesheet :refer [at-media]]
    [spade.core :refer [defglobal defattrs]]))
 
+(def mobile-screen {:max-width "750px"})
+
 (defglobal defaults
   [:html {:height "100%"}
    [:body
@@ -38,7 +40,7 @@
    :justify-content :center
    :padding "16px"
    :gap "8px"}
-  (at-media {:max-width "750px"}
+  (at-media mobile-screen
    {:height :unset
     :padding "0 32px"
     :flex-direction :column}))
@@ -48,17 +50,19 @@
    :gap "16px"
    :display :flex
    :flex-direction :column}
-  (at-media {:max-width "750px"}
+  (at-media mobile-screen
             {:width "100%"}))
 
 (defattrs divider-column []
   {:display :flex
    :flex-direction :column
    :height "100%"
-   :align-items :center})
+   :align-items :center}
+  (at-media mobile-screen
+            {:height :unset}))
 
 (defattrs button-container []
   {:padding "16px 0"}
-  (at-media {:max-width "750px"}
+  (at-media mobile-screen
    {:padding "8px 0"
     :transform "rotate(90deg)"}))
