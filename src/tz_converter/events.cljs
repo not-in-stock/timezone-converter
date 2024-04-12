@@ -11,7 +11,7 @@
             db/default-db))
 
 (re-frame/reg-event-db
- ::set-time
+ ::set-date-time
  (fn [db [_ panel-id time]]
    (-> db
        (assoc-in [panel-id :date-time] time))))

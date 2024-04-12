@@ -70,7 +70,7 @@
      :value (<sub [::subs/get-date :left-panel])
      :disabled (not= :left-panel (<sub [::subs/source-panel]))
      :on-change (fn [date-time _]
-                  (>evt [::events/set-time :left-panel date-time]))}]])
+                  (>evt [::events/set-date-time :left-panel date-time]))}]])
 
 (defn right-panle-pickers []
   [:div#right-panle (styles/input-column)
@@ -87,7 +87,7 @@
      :disabled (not= :right-panel (<sub [::subs/source-panel]))
      :value (<sub [::subs/get-date :right-panel])
      :on-change (fn [date-time _]
-                  (>evt [::events/set-time :right-panel date-time]))}]])
+                  (>evt [::events/set-date-time :right-panel date-time]))}]])
 
 (defn direction-button []
   (let [source-panel (<sub [::subs/source-panel])]
