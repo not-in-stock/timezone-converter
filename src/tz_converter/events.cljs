@@ -24,7 +24,6 @@
  (fn [db [_ panel-id time]]
    (-> db
        (assoc-in [panel-id :time] time)
-       (assoc :source-panel panel-id)
        (set-utc-datetime panel-id))))
 
 (re-frame/reg-event-db
@@ -32,7 +31,6 @@
  (fn [db [_ panel-id timezone]]
    (-> db
        (assoc-in [panel-id :timezone] timezone)
-       (assoc :source-panel panel-id)
        (set-utc-datetime panel-id))))
 
 (re-frame/reg-event-db
