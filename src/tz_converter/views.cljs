@@ -48,7 +48,8 @@
   (let [{:keys [value]} (bean option)]
     (some-> value
             zone-id->label
-            (str/includes? term))))
+            (str/lower-case)
+            (str/includes? (str/lower-case term)))))
 
 (def timepicker-format
   "HH:mm")
