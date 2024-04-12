@@ -22,13 +22,18 @@
   [:div.ant-divider
    {:height "100%"}])
 
+(defattrs app-background []
+  {:display :flex
+   :height "100%"
+   :flex-direction :column})
+
 (defattrs title-container []
   {:display :flex
    :justify-content :center})
 
 (defattrs input-row []
   {:display :flex
-   :height "100%"
+   :flex-grow "1"
    :align-items :center
    :justify-content :center
    :padding "16px"

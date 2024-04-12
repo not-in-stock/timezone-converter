@@ -110,8 +110,7 @@
                :right-panel [:> ArrowLeftOutlined]))}]]))
 
 (defn main-panel []
-  [:div {:style {:backdrop-filter "blur(30px)"
-                 :height "100%"}}
+  [:div (styles/app-background)
    [:div (styles/title-container)
     [:> Typography.Title {:level 3}
      "Timezone converter"]]
