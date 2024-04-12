@@ -59,6 +59,7 @@
   [:div#left-panel (styles/input-column)
    [:> Select
     {:show-search true
+     :size "large"
      :filter-option filter-time-zone
      :allow-clear true
      :value (<sub [::subs/timezone :left-panel])
@@ -68,6 +69,7 @@
      :options time-zone-grouped-options}]
    [time-picker
     {:format timepicker-format
+     :size "large"
      :disabled-placeholder? (<sub [::subs/panel-disabled? :left-panel])
      :value (<sub [::subs/date-time :left-panel])
      :disabled? (<sub [::subs/panel-disabled? :left-panel])
@@ -78,6 +80,7 @@
   [:div#right-panle (styles/input-column)
    [:> Select
     {:show-search true
+     :size "large"
      :allow-clear true
      :filter-option filter-time-zone
      :placeholder "Select Timezone"
@@ -87,6 +90,7 @@
      :options time-zone-grouped-options}]
    [time-picker
     {:format timepicker-format
+     :size "large"
      :disabled-placeholder? (<sub [::subs/panel-disabled? :right-panel])
      :value (<sub [::subs/date-time :right-panel])
      :disabled? (<sub [::subs/panel-disabled? :right-panel])
