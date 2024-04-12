@@ -19,9 +19,6 @@
                    Divider
                    theme]]))
 
-(def timezones
-  (util/get-available-timezones))
-
 (defn- zone-id->label [timezone]
   (str/replace timezone #"_" " "))
 
@@ -33,10 +30,10 @@
                :value raw-timezone}))))
 
 (def time-zone-grouped-options
-  (->> timezones
+  (->> util/timezones
        (map (fn [tz]
               (if (str/includes? tz "/")
-                (let [[group timezone] (str/split tz #"/")]
+                (let [[group timezone] (str/split tz #"/" 2)]
                   {:raw-timezone tz
                    :group group
                    :timezone timezone})

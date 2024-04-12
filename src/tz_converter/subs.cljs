@@ -4,9 +4,6 @@
    [re-frame.core :as re-frame]
    [dayjs]))
 
-(def timezones
-  (util/get-available-timezones))
-
 (re-frame/reg-sub
  ::default-timezone
  (fn [_ _]

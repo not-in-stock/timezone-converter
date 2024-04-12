@@ -9,6 +9,9 @@
 (defn get-available-timezones []
   (set (zone-id/get-available-zone-ids)))
 
+(def timezones
+  (get-available-timezones))
+
 (def <sub (comp deref re-frame/subscribe))
 
 (def >evt re-frame/dispatch)
