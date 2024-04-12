@@ -30,7 +30,4 @@
   :browser-test {:target :browser-test
                  :ns-regexp "-test$"
                  :runner-ns shadow.test.browser
-                 :test-dir  "target/browser-test"}
-  :karma-test {:target :karma
-               :ns-regexp "-test$"
-               :output-to "target/karma-test.js"}}}
+                 :test-dir  "target/browser-test"}}}
