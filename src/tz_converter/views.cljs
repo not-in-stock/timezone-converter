@@ -68,8 +68,9 @@
      :options time-zone-grouped-options}]
    [time-picker
     {:format timepicker-format
+     :disabled-placeholder? (<sub [::subs/panel-disabled? :left-panel])
      :value (<sub [::subs/date-time :left-panel])
-     :disabled (<sub [::subs/panel-disabled? :left-panel])
+     :disabled? (<sub [::subs/panel-disabled? :left-panel])
      :on-change (fn [date-time _]
                   (>evt [::events/set-date-time date-time]))}]])
 
@@ -86,8 +87,9 @@
      :options time-zone-grouped-options}]
    [time-picker
     {:format timepicker-format
+     :disabled-placeholder? (<sub [::subs/panel-disabled? :right-panel])
      :value (<sub [::subs/date-time :right-panel])
-     :disabled (<sub [::subs/panel-disabled? :right-panel])
+     :disabled? (<sub [::subs/panel-disabled? :right-panel])
      :on-change (fn [date-time _]
                   (>evt [::events/set-date-time date-time]))}]])
 
