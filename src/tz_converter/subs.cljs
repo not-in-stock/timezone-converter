@@ -9,29 +9,20 @@
    source-panel))
 
 (re-frame/reg-sub
- ::right-timezone
- (fn [db]
-   (-> db :right-panel :timezone)))
-
-(re-frame/reg-sub
- ::left-timezone
- (fn [db]
-   (-> db :left-panel :timezone)))
-
-(defn in-time-zone [date-time timezone]
-  (-> date-time
-      (t/in timezone)
-      t/date-time
-      t/instant))
+ ::timezone
+ (fn [db [_ panel-id]]
+   (-> db panel-id :timezone)))
 
 (re-frame/reg-sub
  ::date-time
  (fn [db [_ panel-id]]
-   (let [date-time (-> db panel-id :date-time)
+   (let [date-time (-> db :date-time)
          timezone (-> db panel-id :timezone)]
      (cond-> date-time
        (and (some? timezone) (some? date-time))
-       (in-time-zone timezone)))))
+       (-> (t/in timezone)
+           t/date-time
+           t/instant)))))
 
 (re-frame/reg-sub
  ::panel-disabled?

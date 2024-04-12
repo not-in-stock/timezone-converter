@@ -4,6 +4,6 @@
 
 (def default-db
   {:source-panel :left-panel
+   :date-time (t/now)
    :right-panel {:timezone "UTC"}
-   :left-panel {:date-time (t/now)
-                :timezone (util/get-current-timezone)}})
+   :left-panel {:timezone (util/get-current-timezone)}})

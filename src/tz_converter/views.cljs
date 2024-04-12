@@ -61,7 +61,7 @@
     {:show-search true
      :filter-option filter-time-zone
      :allow-clear true
-     :value (<sub [::subs/left-timezone])
+     :value (<sub [::subs/timezone :left-panel])
      :on-change #(>evt [::events/set-timezone :left-panel %])
      :on-clear #(>evt [::events/set-timezone :left-panel nil])
      :placeholder "Select Timezone"
@@ -71,7 +71,7 @@
      :value (<sub [::subs/date-time :left-panel])
      :disabled (<sub [::subs/panel-disabled? :left-panel])
      :on-change (fn [date-time _]
-                  (>evt [::events/set-date-time :left-panel date-time]))}]])
+                  (>evt [::events/set-date-time date-time]))}]])
 
 (defn right-panle-pickers []
   [:div#right-panle (styles/input-column)
@@ -80,7 +80,7 @@
      :allow-clear true
      :filter-option filter-time-zone
      :placeholder "Select Timezone"
-     :value (<sub [::subs/right-timezone])
+     :value (<sub [::subs/timezone :right-panel])
      :on-change #(>evt [::events/set-timezone :right-panel %])
      :on-clear #(>evt [::events/set-timezone :right-panel nil])
      :options time-zone-grouped-options}]
@@ -89,7 +89,7 @@
      :value (<sub [::subs/date-time :right-panel])
      :disabled (<sub [::subs/panel-disabled? :right-panel])
      :on-change (fn [date-time _]
-                  (>evt [::events/set-date-time :right-panel date-time]))}]])
+                  (>evt [::events/set-date-time date-time]))}]])
 
 (defn direction-button []
   (let [source-panel (<sub [::subs/source-panel])]

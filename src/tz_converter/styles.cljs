@@ -1,6 +1,6 @@
 (ns tz-converter.styles
   (:require
-   [spade.core :refer [defglobal defclass defattrs]]))
+   [spade.core :refer [defglobal defattrs]]))
 
 (defglobal defaults
   [:html {:height "100%"}
