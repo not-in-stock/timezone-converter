@@ -1,21 +1,6 @@
 (ns tz-converter.subs
   (:require
-   [tz-converter.util :as util]
-   [re-frame.core :as re-frame]
-   [dayjs]))
-
-(re-frame/reg-sub
- ::default-timezone
- (fn [_ _]
-   (util/get-current-timezone)))
-
-(def now
-  dayjs)
-
-(re-frame/reg-sub
- ::default-time
- (fn [_ _]
-   (now)))
+   [re-frame.core :as re-frame]))
 
 (re-frame/reg-sub
  ::source-panel
@@ -31,3 +16,8 @@
  ::left-timezone
  (fn [db]
    (-> db :left-panel :timezone)))
+
+(re-frame/reg-sub
+ ::get-date
+ (fn [db [_ panel-id]]
+   (-> db panel-id :time)))
