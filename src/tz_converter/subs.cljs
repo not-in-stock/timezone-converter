@@ -21,9 +21,9 @@
    (now)))
 
 (re-frame/reg-sub
- ::primary-panel
- (fn [{:keys [primary-panel]}]
-   primary-panel))
+ ::source-panel
+ (fn [{:keys [source-panel]}]
+   source-panel))
 
 (re-frame/reg-sub
  ::right-timezone
