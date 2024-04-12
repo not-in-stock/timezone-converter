@@ -3,7 +3,6 @@
    [day8.re-frame.tracing :refer-macros [fn-traced]]
    [re-frame.core :as re-frame]
    [tz-converter.db :as db]
-   [tick.core :as t]
    ["@js-joda/timezone"]))
 
 (re-frame/reg-event-db
@@ -11,27 +10,17 @@
  (fn-traced [_ _]
             db/default-db))
 
-(defn set-utc-datetime [db panel-id]
-  (let [{:keys [time timezone]} (get db panel-id)]
-    (cond-> db
-      (and (some? time)
-           (some? timezone))
-      (assoc :utc {:time time
-                   :timezone timezone}))))
-
 (re-frame/reg-event-db
  ::set-time
  (fn [db [_ panel-id time]]
    (-> db
-       (assoc-in [panel-id :time] time)
-       (set-utc-datetime panel-id))))
+       (assoc-in [panel-id :date-time] time))))
 
 (re-frame/reg-event-db
  ::set-timezone
  (fn [db [_ panel-id timezone]]
    (-> db
-       (assoc-in [panel-id :timezone] timezone)
-       (set-utc-datetime panel-id))))
+       (assoc-in [panel-id :timezone] timezone))))
 
 (re-frame/reg-event-db
  ::flip-source-panel

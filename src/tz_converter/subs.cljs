@@ -20,4 +20,4 @@
 (re-frame/reg-sub
  ::get-date
  (fn [db [_ panel-id]]
-   (-> db panel-id :time)))
+   (-> db panel-id :date-time)))
