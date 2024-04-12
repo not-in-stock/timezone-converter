@@ -91,7 +91,7 @@
 
 (defn direction-button []
   (let [source-panel (<sub [::subs/source-panel])]
-    [:div (styles/title-container)
+    [:div (styles/button-container)
     [:> Button {:type "primary"
                 :shape "circle"
                 :on-click #(>evt [::events/flip-source-panel])

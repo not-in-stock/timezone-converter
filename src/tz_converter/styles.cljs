@@ -44,3 +44,6 @@
    :flex-direction :column
    :height "100%"
    :align-items :center})
+
+(defattrs button-container []
+  {:padding "16px 0"})
