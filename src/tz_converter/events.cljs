@@ -1,10 +1,10 @@
 (ns tz-converter.events
   (:require
+   [day8.re-frame.tracing :refer-macros [fn-traced]]
    [re-frame.core :as re-frame]
    [tz-converter.db :as db]
    [tick.core :as t]
-   ["@js-joda/timezone" :as js-joda-timezone]
-   [day8.re-frame.tracing :refer-macros [fn-traced]]))
+   ["@js-joda/timezone"]))
 
 (re-frame/reg-event-db
  ::initialize-db
