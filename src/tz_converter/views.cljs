@@ -69,7 +69,7 @@
     {:format timepicker-format
      :value (<sub [::subs/get-date :left-panel])
      :disabled (not= :left-panel (<sub [::subs/source-panel]))
-     :on-change (fn [date-time _time]
+     :on-change (fn [date-time _]
                   (>evt [::events/set-time :left-panel date-time]))}]])
 
 (defn right-panle-pickers []
@@ -86,7 +86,7 @@
     {:format timepicker-format
      :disabled (not= :right-panel (<sub [::subs/source-panel]))
      :value (<sub [::subs/get-date :right-panel])
-     :on-change (fn [date-time _time]
+     :on-change (fn [date-time _]
                   (>evt [::events/set-time :right-panel date-time]))}]])
 
 (defn direction-button []
