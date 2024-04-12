@@ -3,16 +3,14 @@
    [tz-converter.styles :as styles]
    [tz-converter.subs :as subs]
    [tz-converter.events :as events]
+   [tz-converter.components :refer [time-picker]]
    [tz-converter.util :as util :refer [<sub >evt]]
-   [medley.core :as medley]
    ["@ant-design/icons" :refer [ArrowRightOutlined
                                 ArrowLeftOutlined]]
-   [tick.core :as t]
    [clojure.string :as str]
    [reagent.core :as r]
    [cljs-bean.core :refer [bean]]
    ["antd" :refer [Select
-                   TimePicker
                    Typography
                    ConfigProvider
                    Button
@@ -57,17 +55,6 @@
 (def timepicker-format
   "HH:mm")
 
-(defn- wrap-on-change [on-chnage]
-  (fn [date time-str]
-    (on-chnage (some-> date .toDate t/instant)
-               (when-not (str/blank? time-str)
-                 time-str))))
-
-(defn time-picker [props]
-  [:> TimePicker
-   (-> props
-       (medley/update-existing :on-change wrap-on-change))])
-
 (defn left-panel-pickers []
   [:div#left-panel (styles/input-column)
    [:> Select {:show-search true
@@ -78,9 +65,10 @@
                :on-clear #(>evt [::events/set-timezone :left-panel nil])
                :placeholder "Select Timezone"
                :options time-zone-grouped-options}]
-   [:> TimePicker
+   [time-picker
     {:format timepicker-format
-     :default-value (<sub [::subs/default-time])
+     :value (<sub [::subs/get-date :left-panel])
+     :disabled (not= :left-panel (<sub [::subs/source-panel]))
      :on-change (fn [date-time _time]
                   (>evt [::events/set-time :left-panel date-time]))}]])
 
@@ -96,6 +84,8 @@
                :options time-zone-grouped-options}]
    [time-picker
     {:format timepicker-format
+     :disabled (not= :right-panel (<sub [::subs/source-panel]))
+     :value (<sub [::subs/get-date :right-panel])
      :on-change (fn [date-time _time]
                   (>evt [::events/set-time :right-panel date-time]))}]])
 
