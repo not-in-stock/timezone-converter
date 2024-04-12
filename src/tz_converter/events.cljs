@@ -20,11 +20,7 @@
         {target-timezone :timezone} (get db target-panel)]
     (cond-> db
       (every? some? [source-date-time source-timezone target-timezone])
-      (assoc-in [target-panel :date-time]
-                (-> source-date-time
-                    (t/in target-timezone)
-                    t/date-time
-                    t/instant) ))))
+      (assoc-in [target-panel :date-time] source-date-time))))
 
 (re-frame/reg-event-db
  ::set-date-time
