@@ -57,14 +57,15 @@
 
 (defn left-panel-pickers []
   [:div#left-panel (styles/input-column)
-   [:> Select {:show-search true
-               :filter-option filter-time-zone
-               :allow-clear true
-               :value (<sub [::subs/left-timezone])
-               :on-change #(>evt [::events/set-timezone :left-panel %])
-               :on-clear #(>evt [::events/set-timezone :left-panel nil])
-               :placeholder "Select Timezone"
-               :options time-zone-grouped-options}]
+   [:> Select
+    {:show-search true
+     :filter-option filter-time-zone
+     :allow-clear true
+     :value (<sub [::subs/left-timezone])
+     :on-change #(>evt [::events/set-timezone :left-panel %])
+     :on-clear #(>evt [::events/set-timezone :left-panel nil])
+     :placeholder "Select Timezone"
+     :options time-zone-grouped-options}]
    [time-picker
     {:format timepicker-format
      :value (<sub [::subs/date-time :left-panel])
@@ -74,14 +75,15 @@
 
 (defn right-panle-pickers []
   [:div#right-panle (styles/input-column)
-   [:> Select {:show-search true
-               :allow-clear true
-               :filter-option filter-time-zone
-               :placeholder "Select Timezone"
-               :value (<sub [::subs/right-timezone])
-               :on-change #(>evt [::events/set-timezone :right-panel %])
-               :on-clear #(>evt [::events/set-timezone :right-panel nil])
-               :options time-zone-grouped-options}]
+   [:> Select
+    {:show-search true
+     :allow-clear true
+     :filter-option filter-time-zone
+     :placeholder "Select Timezone"
+     :value (<sub [::subs/right-timezone])
+     :on-change #(>evt [::events/set-timezone :right-panel %])
+     :on-clear #(>evt [::events/set-timezone :right-panel nil])
+     :options time-zone-grouped-options}]
    [time-picker
     {:format timepicker-format
      :value (<sub [::subs/date-time :right-panel])
@@ -92,13 +94,14 @@
 (defn direction-button []
   (let [source-panel (<sub [::subs/source-panel])]
     [:div (styles/button-container)
-    [:> Button {:type "primary"
-                :shape "circle"
-                :on-click #(>evt [::events/flip-source-panel])
-                :icon (r/as-element
-                       (case source-panel
-                         :left-panel [:> ArrowRightOutlined]
-                         :right-panel [:> ArrowLeftOutlined]))}]]))
+    [:> Button
+     {:type "primary"
+      :shape "circle"
+      :on-click #(>evt [::events/flip-source-panel])
+      :icon (r/as-element
+             (case source-panel
+               :left-panel [:> ArrowRightOutlined]
+               :right-panel [:> ArrowLeftOutlined]))}]]))
 
 (defn main-panel []
   [:div {:style {:backdrop-filter "blur(30px)"
