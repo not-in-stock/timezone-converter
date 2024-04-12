@@ -21,3 +21,9 @@
  ::get-date
  (fn [db [_ panel-id]]
    (-> db panel-id :date-time)))
+
+(re-frame/reg-sub
+ ::panel-disabled?
+ :<- [::source-panel]
+ (fn [source-panel [_ panel-id]]
+   (not= panel-id source-panel)))

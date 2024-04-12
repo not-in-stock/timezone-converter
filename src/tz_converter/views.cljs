@@ -68,7 +68,7 @@
    [time-picker
     {:format timepicker-format
      :value (<sub [::subs/get-date :left-panel])
-     :disabled (not= :left-panel (<sub [::subs/source-panel]))
+     :disabled (<sub [::subs/panel-disabled? :left-panel])
      :on-change (fn [date-time _]
                   (>evt [::events/set-date-time :left-panel date-time]))}]])
 
@@ -84,8 +84,8 @@
                :options time-zone-grouped-options}]
    [time-picker
     {:format timepicker-format
-     :disabled (not= :right-panel (<sub [::subs/source-panel]))
      :value (<sub [::subs/get-date :right-panel])
+     :disabled (<sub [::subs/panel-disabled? :right-panel])
      :on-change (fn [date-time _]
                   (>evt [::events/set-date-time :right-panel date-time]))}]])
 

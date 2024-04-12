@@ -10,6 +10,10 @@
 (defn get-available-timezones []
   (set (zone-id/get-available-zone-ids)))
 
+(def get-opposite-panel
+  {:left-panel :right-panel
+   :right-panel :left-panel})
+
 (def timezones
   (get-available-timezones))
 
