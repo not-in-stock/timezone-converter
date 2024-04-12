@@ -24,3 +24,13 @@
  ::primary-panel
  (fn [{:keys [primary-panel]}]
    primary-panel))
+
+(re-frame/reg-sub
+ ::right-timezone
+ (fn [db]
+   (-> db :right-panel :timezone)))
+
+(re-frame/reg-sub
+ ::left-timezone
+ (fn [db]
+   (-> db :left-panel :timezone)))

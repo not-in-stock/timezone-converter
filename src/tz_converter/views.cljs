@@ -4,6 +4,8 @@
    [tz-converter.subs :as subs]
    [tz-converter.events :as events]
    [tz-converter.util :as util :refer [<sub >evt]]
+   [medley.core :as medley]
+   [tick.core :as t]
    [clojure.string :as str]
    [cljs-bean.core :refer [bean]]
    ["antd" :refer [Select
@@ -54,12 +56,24 @@
 (def timepicker-format
   "HH:mm")
 
+(defn- wrap-on-change [on-chnage]
+  (fn [date time-str]
+    (on-chnage (some-> date .toDate t/instant)
+               (when-not (str/blank? time-str)
+                 time-str))))
+
+(defn time-picker [props]
+  [:> TimePicker
+   (-> props
+       (medley/update-existing :on-change wrap-on-change))])
+
 (defn left-panel-pickers []
   [:div#left-panel (styles/input-column)
    [:> Select {:show-search true
                :filter-option filter-time-zone
                :allow-clear true
                :default-value (<sub [::subs/default-timezone])
+               :value (<sub [::subs/left-timezone])
                :on-change #(>evt [::events/set-timezone :left-panel %])
                :on-clear #(>evt [::events/set-timezone :left-panel nil])
                :placeholder "Select Timezone"
@@ -67,10 +81,8 @@
    [:> TimePicker
     {:format timepicker-format
      :default-value (<sub [::subs/default-time])
-     :on-change (fn [_ time]
-                  (>evt [::events/set-time :left-panel
-                         (when-not (str/blank? time)
-                           time)]))}]])
+     :on-change (fn [date-time _time]
+                  (>evt [::events/set-time :left-panel date-time]))}]])
 
 (defn right-panle-pickers []
   [:div#right-panle (styles/input-column)
@@ -78,15 +90,14 @@
                :allow-clear true
                :filter-option filter-time-zone
                :placeholder "Select Timezone"
+               :value (<sub [::subs/right-timezone])
                :on-change #(>evt [::events/set-timezone :right-panel %])
                :on-clear #(>evt [::events/set-timezone :right-panel nil])
                :options time-zone-grouped-options}]
-   [:> TimePicker
+   [time-picker
     {:format timepicker-format
-     :on-change (fn [_ time]
-                  (>evt [::events/set-time :right-panel
-                         (when-not (str/blank? time)
-                           time)]))}]])
+     :on-change (fn [date-time _time]
+                  (>evt [::events/set-time :right-panel date-time]))}]])
 
 (defn direction-marker []
   [:div (styles/title-container)
