@@ -1,6 +1,6 @@
 # tz-converter
 
-A [re-frame](https://github.com/day8/re-frame) application designed to perform converstion of time between timezones.
+A demo [re-frame](https://github.com/day8/re-frame) application designed to perform conversion of time between timezones, developed as a part of a take-home task.
 
 ## Getting Started
 
